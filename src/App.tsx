@@ -12,6 +12,7 @@ import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { motion } from 'motion/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const handleNavigate = (sectionId: string) => {
@@ -137,6 +138,9 @@ export default function App() {
 
       {/* Floating Interactive WhatsApp Desk Widget */}
       <WhatsAppWidget />
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
     </div>
   );
 }

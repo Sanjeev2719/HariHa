@@ -104,7 +104,27 @@ export default function ContactForm() {
     <section id="contact" className="py-24 bg-[#F4F7FC]/25 backdrop-blur-xl border-b border-[#D2DFEE]/60 scroll-mt-20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        {/* Section Header across top with scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mb-12 lg:mb-16 text-left"
+        >
+          <span className="text-[10px] md:text-xs font-semibold text-[#0052FF] uppercase tracking-[0.4em] block mb-3">
+            TAKE ACTION
+          </span>
+          <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
+            Commence Your Build <br />
+            <span className="text-[#475569] font-normal">Schedule A Site Advisory</span>
+          </h2>
+          <p className="text-sm md:text-base text-[#475569] font-light leading-relaxed">
+            Connect with our residential construction and design estimators. We are available for physical site visits, structural blueprints drafting consultations, and preliminary material schedule calculations.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* Left Column: Architectural Advisory Details (5 Columns) with scroll reveal */}
           <motion.div
@@ -112,21 +132,8 @@ export default function ContactForm() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 text-left space-y-10"
+            className="lg:col-span-5 text-left space-y-6"
           >
-            <div>
-              <span className="text-[10px] md:text-xs font-semibold text-[#0052FF] uppercase tracking-[0.4em] block mb-3">
-                TAKE ACTION
-              </span>
-              <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
-                Commence Your Build <br />
-                <span className="text-[#475569] font-normal">Schedule A Site Advisory</span>
-              </h2>
-              <p className="text-sm text-[#475569] font-light leading-relaxed">
-                Connect with our residential construction and design estimators. We are available for physical site visits, structural blueprints drafting consultations, and preliminary material schedule calculations.
-              </p>
-            </div>
-
             {/* Quick Contacts details cards with premium glass styling */}
             <div className="space-y-6">
               <div className="flex items-start space-x-4 p-5 bg-white/45 backdrop-blur-md border border-white/60 rounded-3xl shadow-[0_4px_20px_rgba(78,67,47,0.01)] hover:bg-white/65 hover:border-[#0052FF]/30 transition-all duration-300">

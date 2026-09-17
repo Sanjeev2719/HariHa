@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Send, MessageSquare } from 'lucide-react';
 import { COMPANY_CONTACTS } from '../data';
 import { motion, AnimatePresence } from 'motion/react';
+import HarihaLogo from './HarihaLogo';
 
 // Authentic WhatsApp SVG Logo icon component
 function WhatsAppLogo({ className = "w-5 h-5" }: { className?: string }) {
@@ -61,14 +62,10 @@ export default function WhatsAppWidget() {
               
               <div className="flex items-center space-x-3 relative z-10">
                 <div className="relative">
-                  {/* Company Emblem / Support Avatar */}
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0052FF] to-[#00D2FF] p-[1.5px] shadow-sm flex items-center justify-center">
-                    <div className="w-full h-full bg-[#0F172A] rounded-full flex items-center justify-center">
-                      <span className="font-serif font-bold text-white text-sm">H</span>
-                    </div>
-                  </div>
+                  {/* Company Official Logo Emblem */}
+                  <HarihaLogo variant="mark" size="md" className="shadow-md ring-2 ring-white/20" />
                   {/* Styled Green Pulsing Online Status */}
-                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0F172A] rounded-full animate-pulse" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-[#0F172A] rounded-full animate-pulse" />
                 </div>
                 <div>
                   <div className="flex items-center space-x-1.5">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, MessageSquare, Phone, Instagram } from 'lucide-react';
 import { COMPANY_CONTACTS, SOCIAL_LINKS } from '../data';
+import HarihaLogo from './HarihaLogo';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
@@ -60,30 +61,13 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <div className="w-full relative z-10">
         <div className="flex items-center justify-between">
           
-          {/* Logo with Enhanced Highlight Badge */}
+          {/* Official Hariha Infra Brand Logo */}
           <button
             id="nav-logo"
             onClick={() => handleNavClick('hero')}
-            className="flex items-center space-x-2.5 text-left group/logo cursor-pointer focus:outline-none py-1 px-2 -ml-2 rounded-2xl hover:bg-white/60 transition-all duration-300"
+            className="flex items-center text-left cursor-pointer focus:outline-none py-1 px-1.5 -ml-1 rounded-2xl hover:bg-white/60 transition-all duration-300"
           >
-            {/* Illuminated Geometric Emblem */}
-            <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-gradient-to-tr from-[#0052FF] via-[#0040D0] to-[#00D2FF] p-[1.5px] shadow-[0_4px_16px_rgba(0,82,255,0.35)] flex items-center justify-center shrink-0 group-hover/logo:shadow-[0_6px_22px_rgba(0,82,255,0.5)] group-hover/logo:scale-105 transition-all duration-300">
-              <div className="w-full h-full bg-[#0F172A] rounded-[10px] flex items-center justify-center">
-                <span className="font-serif font-black text-white text-base md:text-lg tracking-wider">H</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center space-x-1.5">
-                <span className="font-serif text-lg md:text-xl tracking-[0.14em] font-black bg-gradient-to-r from-[#0052FF] via-[#0A1128] to-[#0052FF] bg-clip-text text-transparent group-hover/logo:from-[#0040D0] group-hover/logo:to-[#00D2FF] transition-all duration-300">
-                  HARIHA INFRA
-                </span>
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#0052FF] animate-pulse" />
-              </div>
-              <span className="text-[7.5px] md:text-[8px] tracking-[0.28em] font-sans text-[#475569] uppercase font-bold">
-                Premier Building Solutions
-              </span>
-            </div>
+            <HarihaLogo size="md" />
           </button>
 
           {/* Desktop Navigation Links */}
@@ -177,14 +161,8 @@ export default function Navbar({ onNavigate }: NavbarProps) {
           >
             <div className="flex flex-col space-y-8 mt-16">
               {/* Drawer Brand Header */}
-              <div className="flex items-center space-x-3 border-b border-[#D2DFEE]/50 pb-5">
-                <div className="w-10 h-10 rounded-xl bg-[#0052FF] flex items-center justify-center text-white font-serif font-bold text-lg shadow-md">
-                  H
-                </div>
-                <div>
-                  <span className="font-serif text-xl tracking-[0.14em] text-[#0052FF] font-bold">HARIHA INFRA</span>
-                  <p className="text-[8px] tracking-[0.25em] font-sans text-[#475569] uppercase mt-0.5 font-semibold">Premier Building Solutions</p>
-                </div>
+              <div className="border-b border-[#D2DFEE]/50 pb-5">
+                <HarihaLogo size="md" />
               </div>
 
               {/* Navigation Items */}

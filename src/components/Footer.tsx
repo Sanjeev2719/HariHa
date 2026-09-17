@@ -1,5 +1,6 @@
 import { COMPANY_CONTACTS, SOCIAL_LINKS } from '../data';
 import { MessageSquare, Phone, Mail, MapPin, Instagram, Youtube, ExternalLink } from 'lucide-react';
+import HarihaLogo from './HarihaLogo';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -21,14 +22,8 @@ export default function Footer({ onNavigate }: FooterProps) {
           
           {/* Brand Info Column */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-[#0052FF] flex items-center justify-center text-white font-serif font-bold text-base shadow-md">
-                H
-              </div>
-              <div>
-                <span className="font-serif text-xl tracking-[0.14em] text-[#0052FF] font-bold">HARIHA INFRA</span>
-                <p className="text-[9px] tracking-[0.2em] font-sans text-[#F4F7FC]/70 uppercase mt-0.5">Premier Building Solutions</p>
-              </div>
+            <div className="cursor-pointer" onClick={() => onNavigate('hero')}>
+              <HarihaLogo size="md" dark={true} />
             </div>
             
             <p className="text-xs text-[#F4F7FC]/70 font-light leading-relaxed">

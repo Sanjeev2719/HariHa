@@ -1,6 +1,7 @@
 import { ArrowRight, MessageSquare, Shield, Award, CheckCircle, Flame, Gift } from 'lucide-react';
 import { COMPANY_CONTACTS } from '../data';
 import { motion } from 'motion/react';
+import HarihaLogo from './HarihaLogo';
 
 interface HeroProps {
   onExploreProjects: () => void;
@@ -56,10 +57,10 @@ export default function Hero({ onExploreProjects, onOpenContact }: HeroProps) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center space-x-2.5 bg-white border border-[#D2DFEE] px-4.5 py-2 rounded-full shadow-[0_4px_15px_rgba(0,82,255,0.05)]"
+            className="inline-flex items-center space-x-2.5 bg-white border border-[#D2DFEE] pl-2 pr-4.5 py-1.5 rounded-full shadow-[0_4px_15px_rgba(0,82,255,0.05)]"
           >
-            <span className="w-2 h-2 bg-[#0052FF] rounded-full animate-ping" />
-            <span className="text-[9px] md:text-[10px] font-sans font-bold text-[#334155] uppercase tracking-[0.25em]">
+            <HarihaLogo variant="mark" size="sm" className="w-6 h-6 rounded-md shadow-xs" />
+            <span className="text-[9px] md:text-[10px] font-sans font-bold text-[#334155] uppercase tracking-[0.2em]">
               BENGALURU’S PREMIER BUILDING SOLUTIONS — SINCE 2002
             </span>
           </motion.div>

@@ -9,6 +9,7 @@ import ReferAndEarn from './components/ReferAndEarn';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import { Analytics } from '@vercel/analytics/react';
 import { motion } from 'motion/react';
 
 export default function App() {
@@ -119,6 +120,9 @@ export default function App() {
 
       {/* Floating Interactive WhatsApp Desk Widget */}
       <WhatsAppWidget />
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }

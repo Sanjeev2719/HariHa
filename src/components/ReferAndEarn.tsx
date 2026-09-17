@@ -39,9 +39,9 @@ export default function ReferAndEarn() {
             <span className="text-[10px] md:text-xs font-semibold text-[#0052FF] uppercase tracking-[0.4em] block">
               PARTNERSHIP OPPORTUNITY
             </span>
-            <h2 className="font-serif text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight">
               Refer a Friend & Earn <br />
-              <span className="font-serif italic text-[#475569] font-normal">Up to ₹1,00,000 Cash</span>
+              <span className="text-[#0052FF] font-bold">Up to ₹1,00,000 Cash</span>
             </h2>
             <p className="text-xs md:text-sm text-[#475569] font-light leading-relaxed max-w-xl">
               Do you know someone planning to construct a home, villa, or execute premium interiors in Bengaluru? Introduce them to Hariha Infra Private Limited. We reward successful client partnerships with high-value cash bonuses.

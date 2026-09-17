@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, MessageSquare, Phone } from 'lucide-react';
-import { COMPANY_CONTACTS } from '../data';
+import { Menu, X, MessageSquare, Phone, Instagram } from 'lucide-react';
+import { COMPANY_CONTACTS, SOCIAL_LINKS } from '../data';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
@@ -19,12 +19,13 @@ export default function Navbar({ onNavigate }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Reordered per client notes: Services -> Projects -> Reviews -> Process -> Packages -> Enquiry
   const navItems = [
     { label: 'Services', id: 'services' },
-    { label: 'Packages', id: 'packages' },
     { label: 'Projects', id: 'projects' },
-    { label: 'FAQs', id: 'faqs' },
-    { label: 'Refer & Earn', id: 'refer' },
+    { label: 'Reviews', id: 'testimonials' },
+    { label: 'Process', id: 'process' },
+    { label: 'Packages', id: 'packages' },
     { label: 'Enquiry', id: 'contact' },
   ];
 
@@ -44,39 +45,49 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`group fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-out cursor-pointer ${
+      className={`group fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-out ${
         isScrolled
-          ? 'top-4 w-[92%] max-w-7xl py-3 px-6 md:px-10 rounded-full bg-white/60 hover:bg-white/85 backdrop-blur-xl hover:backdrop-blur-3xl border border-white/70 hover:border-white shadow-[0_12px_40px_rgba(0,82,255,0.06),_inset_0_1px_2px_rgba(255,255,255,0.8)] hover:shadow-[0_22px_60px_rgba(0,82,255,0.18),_inset_0_2px_4px_rgba(255,255,255,1),_inset_0_-1px_3px_rgba(0,0,0,0.04)] hover:scale-[1.01]'
-          : 'top-4 w-[92%] max-w-7xl py-3.5 px-6 md:px-10 rounded-full bg-white/40 hover:bg-white/80 backdrop-blur-lg hover:backdrop-blur-3xl border border-white/60 hover:border-white shadow-[0_8px_30px_rgba(15,23,42,0.04),_inset_0_1px_2px_rgba(255,255,255,0.7)] hover:shadow-[0_20px_55px_rgba(0,82,255,0.15),_inset_0_2px_4px_rgba(255,255,255,1)] hover:scale-[1.01]'
+          ? 'top-4 w-[94%] max-w-7xl py-2.5 px-5 md:px-8 rounded-full bg-white/75 hover:bg-white/90 backdrop-blur-xl hover:backdrop-blur-3xl border border-white/80 hover:border-white shadow-[0_12px_40px_rgba(0,82,255,0.08),_inset_0_1px_2px_rgba(255,255,255,0.9)] hover:scale-[1.005]'
+          : 'top-4 w-[94%] max-w-7xl py-3 px-5 md:px-8 rounded-full bg-white/50 hover:bg-white/85 backdrop-blur-lg hover:backdrop-blur-3xl border border-white/70 hover:border-white shadow-[0_8px_30px_rgba(15,23,42,0.05),_inset_0_1px_2px_rgba(255,255,255,0.8)] hover:scale-[1.005]'
       }`}
     >
       {/* iOS Liquid Glass Specular Reflection & Light Shimmer Sweep */}
       <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-        {/* Top Rim Specular Gloss */}
         <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/80 via-white/20 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        {/* Dynamic Light Sheen Sweep on Hover */}
         <div className="absolute -top-24 -left-full w-1/2 h-[300%] bg-gradient-to-r from-transparent via-white/50 to-transparent -rotate-45 group-hover:left-[150%] transition-all duration-1000 ease-in-out" />
       </div>
 
       <div className="w-full relative z-10">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          
+          {/* Logo with Enhanced Highlight Badge */}
           <button
             id="nav-logo"
             onClick={() => handleNavClick('hero')}
-            className="flex flex-col items-start text-left group/logo cursor-pointer focus:outline-none"
+            className="flex items-center space-x-2.5 text-left group/logo cursor-pointer focus:outline-none py-1 px-2 -ml-2 rounded-2xl hover:bg-white/60 transition-all duration-300"
           >
-            <span className="font-serif text-xl md:text-2xl tracking-[0.15em] text-[#0052FF] group-hover/logo:opacity-85 transition-opacity duration-300 font-bold">
-              HARIHA INFRA
-            </span>
-            <span className="text-[7px] md:text-[8px] tracking-[0.3em] font-sans text-[#475569] uppercase mt-0.5 font-medium">
-              Premier Building Solutions
-            </span>
+            {/* Illuminated Geometric Emblem */}
+            <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-gradient-to-tr from-[#0052FF] via-[#0040D0] to-[#00D2FF] p-[1.5px] shadow-[0_4px_16px_rgba(0,82,255,0.35)] flex items-center justify-center shrink-0 group-hover/logo:shadow-[0_6px_22px_rgba(0,82,255,0.5)] group-hover/logo:scale-105 transition-all duration-300">
+              <div className="w-full h-full bg-[#0F172A] rounded-[10px] flex items-center justify-center">
+                <span className="font-serif font-black text-white text-base md:text-lg tracking-wider">H</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <div className="flex items-center space-x-1.5">
+                <span className="font-serif text-lg md:text-xl tracking-[0.14em] font-black bg-gradient-to-r from-[#0052FF] via-[#0A1128] to-[#0052FF] bg-clip-text text-transparent group-hover/logo:from-[#0040D0] group-hover/logo:to-[#00D2FF] transition-all duration-300">
+                  HARIHA INFRA
+                </span>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#0052FF] animate-pulse" />
+              </div>
+              <span className="text-[7.5px] md:text-[8px] tracking-[0.28em] font-sans text-[#475569] uppercase font-bold">
+                Premier Building Solutions
+              </span>
+            </div>
           </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-7 bg-white/40 group-hover:bg-white/60 backdrop-blur-md py-1.5 px-6 rounded-full border border-white/30 shadow-[inset_0_1px_2px_rgba(255,255,255,0.6)] transition-all duration-300">
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center space-x-6 bg-white/50 group-hover:bg-white/70 backdrop-blur-md py-1.5 px-6 rounded-full border border-white/50 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7)] transition-all duration-300">
             {navItems.map((item) => (
               <button
                 id={`desktop-nav-link-${item.id}`}
@@ -90,36 +101,65 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             ))}
           </div>
 
-          {/* Action CTAs */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Action CTAs: Phone, Instagram Link & WhatsApp */}
+          <div className="hidden md:flex items-center space-x-3">
+            {/* Direct Phone link */}
             <a
               id="navbar-phone-link"
               href={`tel:${COMPANY_CONTACTS.phone}`}
-              className="flex items-center space-x-2 text-[11px] font-semibold text-[#475569] hover:text-[#0F172A] transition-colors"
+              className="flex items-center space-x-1.5 text-[11px] font-semibold text-[#475569] hover:text-[#0F172A] transition-colors py-1.5 px-3 rounded-full hover:bg-white/50"
             >
               <Phone size={12} className="text-[#0052FF]" />
               <span className="tracking-wider">{COMPANY_CONTACTS.phone}</span>
             </a>
 
+            {/* Instagram Hyperlink in Navigation Bar */}
+            <a
+              id="navbar-instagram-link"
+              href={SOCIAL_LINKS.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white shadow-sm hover:shadow-[0_4px_12px_rgba(230,104,60,0.4)] hover:scale-110 transition-all duration-300"
+              title="Follow Hariha Infra on Instagram"
+              aria-label="Instagram Profile"
+            >
+              <Instagram size={14} />
+            </a>
+
+            {/* WhatsApp CTA */}
             <button
               id="navbar-whatsapp-cta"
               onClick={openWhatsApp}
-              className="flex items-center space-x-2 bg-[#0052FF] hover:bg-[#0040D0] text-white px-5 py-2.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] transition-all duration-300 shadow-[0_4px_14px_rgba(0,82,255,0.2)] hover:shadow-[0_8px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 cursor-pointer border border-white/20"
+              className="flex items-center space-x-2 bg-[#0052FF] hover:bg-[#0040D0] text-white px-4.5 py-2 rounded-full text-[10px] font-semibold uppercase tracking-[0.14em] transition-all duration-300 shadow-[0_4px_14px_rgba(0,82,255,0.2)] hover:shadow-[0_8px_25px_rgba(0,82,255,0.35)] hover:-translate-y-0.5 cursor-pointer border border-white/20"
             >
               <MessageSquare size={12} />
               <span>WhatsApp Enquiry</span>
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-[#0F172A] hover:text-[#0052FF] p-1.5 transition-colors focus:outline-none bg-white/60 backdrop-blur-md rounded-full border border-white/60"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {/* Mobile Right Controls: Instagram Icon + Mobile Menu Toggle */}
+          <div className="flex items-center space-x-2 md:hidden">
+            <a
+              id="mobile-navbar-instagram-link"
+              href={SOCIAL_LINKS.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white shadow-sm"
+              aria-label="Instagram Profile"
+            >
+              <Instagram size={14} />
+            </a>
+
+            <button
+              id="mobile-menu-toggle"
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-[#0F172A] hover:text-[#0052FF] p-2 transition-colors focus:outline-none bg-white/70 backdrop-blur-md rounded-full border border-white/60 shadow-sm"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
+
         </div>
       </div>
 
@@ -136,18 +176,25 @@ export default function Navbar({ onNavigate }: NavbarProps) {
             style={{ top: '0', height: '100vh' }}
           >
             <div className="flex flex-col space-y-8 mt-16">
-              <div className="border-b border-[#D2DFEE]/50 pb-4">
-                <span className="font-serif text-xl tracking-[0.15em] text-[#0052FF] font-bold">HARIHA INFRA</span>
-                <p className="text-[8px] tracking-[0.3em] font-sans text-[#475569] uppercase mt-1 font-medium">Premier Building Solutions</p>
+              {/* Drawer Brand Header */}
+              <div className="flex items-center space-x-3 border-b border-[#D2DFEE]/50 pb-5">
+                <div className="w-10 h-10 rounded-xl bg-[#0052FF] flex items-center justify-center text-white font-serif font-bold text-lg shadow-md">
+                  H
+                </div>
+                <div>
+                  <span className="font-serif text-xl tracking-[0.14em] text-[#0052FF] font-bold">HARIHA INFRA</span>
+                  <p className="text-[8px] tracking-[0.25em] font-sans text-[#475569] uppercase mt-0.5 font-semibold">Premier Building Solutions</p>
+                </div>
               </div>
 
-              <div className="flex flex-col space-y-6">
+              {/* Navigation Items */}
+              <div className="flex flex-col space-y-4">
                 {navItems.map((item) => (
                   <button
                     id={`mobile-nav-link-${item.id}`}
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
-                    className="text-left text-sm font-medium uppercase tracking-[0.2em] text-[#334155] hover:text-[#0052FF] py-2 transition-colors duration-300"
+                    className="text-left text-sm font-semibold uppercase tracking-[0.18em] text-[#334155] hover:text-[#0052FF] py-2 transition-colors duration-300 border-b border-[#D2DFEE]/30"
                   >
                     {item.label}
                   </button>
@@ -155,11 +202,24 @@ export default function Navbar({ onNavigate }: NavbarProps) {
               </div>
             </div>
 
+            {/* Bottom Drawer Actions */}
             <div className="flex flex-col space-y-4 border-t border-[#D2DFEE]/50 pt-6">
+              {/* Instagram Profile Link */}
+              <a
+                id="drawer-instagram-link"
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center space-x-2 py-3 rounded-full bg-gradient-to-r from-[#f09433] via-[#e6683c] to-[#bc1888] text-white text-xs font-semibold uppercase tracking-wider shadow-sm"
+              >
+                <Instagram size={16} />
+                <span>Follow on Instagram</span>
+              </a>
+
               <a
                 id="mobile-phone-link"
                 href={`tel:${COMPANY_CONTACTS.phone}`}
-                className="flex items-center space-x-3 text-sm text-[#475569] hover:text-[#0F172A]"
+                className="flex items-center justify-center space-x-3 text-sm font-semibold text-[#475569] hover:text-[#0F172A] py-2"
               >
                 <Phone size={16} className="text-[#0052FF]" />
                 <span className="tracking-wide">{COMPANY_CONTACTS.phone}</span>
@@ -168,10 +228,10 @@ export default function Navbar({ onNavigate }: NavbarProps) {
               <button
                 id="mobile-whatsapp-cta"
                 onClick={openWhatsApp}
-                className="w-full flex items-center justify-center space-x-2 bg-[#0052FF] hover:bg-[#0040D0] text-white py-3.5 rounded-full text-xs font-medium uppercase tracking-[0.2em] transition-all duration-300 shadow-[0_4px_14px_rgba(0,82,255,0.15)] cursor-pointer border border-white/10"
+                className="w-full flex items-center justify-center space-x-2 bg-[#0052FF] hover:bg-[#0040D0] text-white py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-300 shadow-[0_4px_14px_rgba(0,82,255,0.2)] cursor-pointer border border-white/10"
               >
                 <MessageSquare size={16} />
-                <span>WhatsApp Chat</span>
+                <span>WhatsApp Enquiry</span>
               </button>
             </div>
           </motion.div>

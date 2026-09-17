@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, MessageSquare, Check, Sparkles, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageSquare, Check, Sparkles, Clock, ExternalLink } from 'lucide-react';
 import { COMPANY_CONTACTS } from '../data';
 import { InquiryFormData } from '../types';
 import { motion } from 'motion/react';
@@ -118,9 +118,9 @@ export default function ContactForm() {
               <span className="text-[10px] md:text-xs font-semibold text-[#0052FF] uppercase tracking-[0.4em] block mb-3">
                 TAKE ACTION
               </span>
-              <h2 className="font-serif text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
+              <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
                 Commence Your Build <br />
-                <span className="font-serif italic text-[#475569] font-normal">Schedule A Site Advisory</span>
+                <span className="text-[#475569] font-normal">Schedule A Site Advisory</span>
               </h2>
               <p className="text-sm text-[#475569] font-light leading-relaxed">
                 Connect with our residential construction and design estimators. We are available for physical site visits, structural blueprints drafting consultations, and preliminary material schedule calculations.
@@ -161,9 +161,51 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <h4 className="text-[10px] uppercase tracking-wider font-bold text-[#0F172A] mb-1">Executive Offices</h4>
-                  <address className="not-italic text-sm text-[#334155] leading-relaxed font-sans font-semibold">
-                    {COMPANY_CONTACTS.address}
-                  </address>
+                  <a
+                    id="contact-google-maps-link"
+                    href={COMPANY_CONTACTS.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="not-italic text-sm text-[#334155] hover:text-[#0052FF] leading-relaxed font-sans font-semibold transition-colors group flex flex-col"
+                    title="Open in Google Maps"
+                  >
+                    <span>{COMPANY_CONTACTS.address}</span>
+                    <span className="inline-flex items-center space-x-1 text-[11px] text-[#0052FF] mt-1 font-semibold group-hover:underline">
+                      <span>Open in Google Maps</span>
+                      <ExternalLink size={12} />
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Interactive Google Map Location Card showing 12.97866, 77.50618 */}
+              <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/60 backdrop-blur-md shadow-sm p-3 hover:shadow-md transition-all">
+                <div className="flex items-center justify-between px-2 pb-2.5">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-[11px] font-bold text-[#0F172A] uppercase tracking-wider font-sans">
+                      Office Location (12.97866, 77.50618)
+                    </span>
+                  </div>
+                  <a
+                    id="map-directions-btn"
+                    href="https://www.google.com/maps?q=12.97866,77.50618"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-[10px] font-semibold text-[#0052FF] hover:underline"
+                  >
+                    <span>Get Directions</span>
+                    <ExternalLink size={10} />
+                  </a>
+                </div>
+                <div className="relative rounded-2xl overflow-hidden border border-[#D2DFEE]/70 aspect-video md:aspect-[16/10] w-full bg-slate-100">
+                  <iframe
+                    title="Hariha Infra Office Location"
+                    src="https://maps.google.com/maps?q=12.97866,77.50618&z=16&output=embed"
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
                 </div>
               </div>
             </div>

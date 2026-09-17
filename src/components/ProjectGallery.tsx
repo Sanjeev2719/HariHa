@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { PROJECTS_DATA, COMPANY_CONTACTS } from '../data';
+import { PROJECTS_DATA, COMPANY_CONTACTS, SOCIAL_LINKS } from '../data';
 import { Project } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
-import { MapPin, Calendar, Layers, X, MessageSquare, ArrowRight, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { MapPin, Calendar, Layers, X, MessageSquare, ArrowRight, ChevronLeft, ChevronRight, Play, ExternalLink, FolderOpen } from 'lucide-react';
 
 const safeUrl = (url?: string) => {
   if (!url) return '';
   return encodeURI(decodeURI(url));
 };
 
-function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Project; idx: number; onSelect: (project: Project) => void; isPaused?: boolean; key?: string }) {
+const getDriveEmbedUrl = (url?: string): string | null => {
+  if (!url) return null;
+  const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (match && match[1]) {
+    return `https://drive.google.com/file/d/${match[1]}/preview`;
+  }
+  return null;
+};
+
+function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Project; idx: number; onSelect: (project: Project, startWithVideo?: boolean) => void; isPaused?: boolean; key?: string }) {
   const images = project.images && project.images.length > 0 ? project.images : [project.image];
   const [currentImgIdx, setCurrentImgIdx] = useState(0);
 
@@ -22,12 +31,12 @@ function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Projec
   }, [images]);
 
   useEffect(() => {
-    if (images.length <= 1 || isPaused || project.video) return;
+    if (images.length <= 1 || isPaused) return;
     const interval = setInterval(() => {
       setCurrentImgIdx((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [images.length, isPaused, project.video]);
+  }, [images.length, isPaused]);
 
   return (
     <motion.div
@@ -38,15 +47,23 @@ function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Projec
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.3 } }}
-      onClick={() => onSelect(project)}
+      onClick={() => onSelect(project, false)}
       className="group relative overflow-hidden border border-white/60 shadow-[0_10px_30px_rgba(78,67,47,0.02)] hover:shadow-[0_20px_50px_rgba(181,148,110,0.12)] transition-all duration-500 bg-white/45 backdrop-blur-md rounded-3xl cursor-pointer flex flex-col justify-between transform-gpu"
     >
-      {/* Video Tour Badge */}
-      {project.video ? (
-        <span className="absolute top-4 left-4 z-20 bg-[#0052FF] text-white text-[9px] font-sans font-bold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-white/30 shadow-lg flex items-center space-x-1.5 backdrop-blur-md">
-          <Play size={10} className="fill-current" />
-          <span>Video Tour</span>
-        </span>
+      {/* Video Tour Badge - One Click to Direct Video Slide */}
+      {project.driveVideoUrl ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(project, true);
+          }}
+          className="absolute top-4 left-4 z-20 bg-[#0052FF] hover:bg-[#0040D0] text-white text-[9px] font-sans font-bold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-white/30 shadow-lg flex items-center space-x-1.5 backdrop-blur-md transition-all hover:scale-105 cursor-pointer"
+          title="Play Video Walkthrough"
+        >
+          <Play size={10} className="fill-current text-[#00D2FF]" />
+          <span>Play Video</span>
+        </button>
       ) : null}
 
       {/* Status Badge for Ongoing Builds */}
@@ -61,41 +78,29 @@ function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Projec
         </span>
       ) : null}
 
-      {/* Image or Video Container */}
+      {/* Lightweight Optimized Image Container */}
       <div className="aspect-4/3 w-full overflow-hidden relative rounded-t-3xl bg-[#0F172A]">
-        {project.video ? (
-          <video
-            src={safeUrl(project.video)}
-            poster={safeUrl(project.image)}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none transform-gpu"
+        {images.map((imgUrl, i) => (
+          <motion.img
+            key={imgUrl}
+            src={safeUrl(imgUrl)}
+            alt={project.title}
+            initial={false}
+            animate={{
+              opacity: i === currentImgIdx ? 1 : 0,
+              scale: i === currentImgIdx ? 1 : 1.04
+            }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu"
+            referrerPolicy="no-referrer"
           />
-        ) : (
-          images.map((imgUrl, i) => (
-            <motion.img
-              key={imgUrl}
-              src={safeUrl(imgUrl)}
-              alt={project.title}
-              initial={false}
-              animate={{
-                opacity: i === currentImgIdx ? 1 : 0,
-                scale: i === currentImgIdx ? 1 : 1.04
-              }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 transform-gpu"
-              referrerPolicy="no-referrer"
-            />
-          ))
-        )}
+        ))}
 
         {/* Subtle dark gradient overlay on hover */}
         <div className="absolute inset-0 bg-[#0F172A]/10 group-hover:bg-[#0F172A]/50 transition-colors duration-500" />
 
         {/* Slideshow Progress Dots */}
-        {!project.video && images.length > 1 && (
+        {images.length > 1 && (
           <div className="absolute bottom-3 left-4 z-20 flex items-center space-x-1.5 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15">
             {images.slice(0, 8).map((_, dotIdx) => (
               <span
@@ -120,7 +125,7 @@ function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Projec
             </span>
             <h3 className="font-serif text-xl tracking-tight text-[#F4F7FC] mb-2">{project.title}</h3>
             <span className="text-[10px] text-white/90 tracking-widest uppercase font-semibold group-hover:text-[#0052FF] transition-colors flex items-center space-x-1">
-              <span>{project.video ? 'Play 4K Video Tour' : images.length > 1 ? `View Gallery (${images.length} Photos)` : 'Read Case Study'}</span>
+              <span>{project.driveVideoUrl ? 'Watch Video / Case Study' : images.length > 1 ? `View Gallery (${images.length} Photos)` : 'Read Case Study'}</span>
               <ArrowRight size={10} />
             </span>
           </div>
@@ -133,10 +138,10 @@ function ProjectCardTile({ project, idx, onSelect, isPaused }: { project: Projec
           <span className="text-[9px] uppercase tracking-widest text-[#0052FF] font-bold">
             {project.category === 'onsite' ? 'On-Site Progress' : project.category === 'interiors' ? 'Bespoke Interiors' : project.category}
           </span>
-          {project.video ? (
+          {project.driveVideoUrl ? (
             <span className="text-[9px] uppercase tracking-wider text-[#0052FF] font-bold flex items-center space-x-1">
               <Play size={10} className="fill-current" />
-              <span>Video Walkthrough</span>
+              <span>Drive Video Available</span>
             </span>
           ) : images.length > 1 ? (
             <span className="text-[9px] uppercase tracking-wider text-[#475569] font-medium">
@@ -187,11 +192,16 @@ export default function ProjectGallery() {
     ? PROJECTS_DATA
     : activeCategory === 'onsite'
     ? PROJECTS_DATA.filter(project => project.category === 'onsite' || project.id.includes('ongoing'))
-    : PROJECTS_DATA.filter(project => project.video || project.status === 'Completed Masterpiece');
+    : PROJECTS_DATA.filter(project => project.driveVideoUrl || project.status === 'Completed Masterpiece');
 
-  const handleSelectProject = (project: Project) => {
+  const handleSelectProject = (project: Project, startWithVideo = false) => {
     setSelectedProject(project);
-    setActiveLightboxImg(0);
+    const images = project.images && project.images.length > 0 ? project.images : [project.image];
+    if (startWithVideo && getDriveEmbedUrl(project.driveVideoUrl)) {
+      setActiveLightboxImg(images.length);
+    } else {
+      setActiveLightboxImg(0);
+    }
   };
 
   const handleWhatsAppProjectInquiry = (project: Project) => {
@@ -216,9 +226,9 @@ export default function ProjectGallery() {
             <span className="text-[10px] md:text-xs font-semibold text-[#0052FF] uppercase tracking-[0.4em] block mb-3">
               PRECISE EXECUTION
             </span>
-            <h2 className="font-serif text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight">
               Our Completed & Ongoing Masterpieces <br />
-              <span className="font-serif italic text-[#475569] font-normal">Timeless Living Architecture</span>
+              <span className="text-[#475569] font-normal">Timeless Living Architecture</span>
             </h2>
           </div>
 
@@ -254,15 +264,31 @@ export default function ProjectGallery() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, idx) => (
-              <ProjectCardTile
-                key={project.id}
-                project={project}
-                idx={idx}
-                onSelect={handleSelectProject}
-                isPaused={selectedProject !== null}
-              />
-            ))}
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, idx) => (
+                <ProjectCardTile
+                  key={project.id}
+                  project={project}
+                  idx={idx}
+                  onSelect={handleSelectProject}
+                  isPaused={selectedProject !== null}
+                />
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="col-span-full py-16 text-center text-[#475569] font-sans"
+              >
+                <p className="text-sm font-medium">Additional projects are currently being cataloged and will be added soon.</p>
+                <button
+                  onClick={() => setActiveCategory('all')}
+                  className="mt-3 inline-block text-xs uppercase tracking-widest text-[#0052FF] font-bold hover:underline cursor-pointer"
+                >
+                  View Basha Hotel &amp; All Projects →
+                </button>
+              </motion.div>
+            )}
           </AnimatePresence>
         </motion.div>
 
@@ -276,6 +302,9 @@ export default function ProjectGallery() {
             const projectImages = selectedProject.images && selectedProject.images.length > 0
               ? selectedProject.images
               : [selectedProject.image];
+            const driveEmbedUrl = getDriveEmbedUrl(selectedProject.driveVideoUrl);
+            const isVideoSlideActive = driveEmbedUrl !== null && activeLightboxImg === projectImages.length;
+            const totalSlides = driveEmbedUrl ? projectImages.length + 1 : projectImages.length;
 
             return (
               <motion.div
@@ -299,186 +328,283 @@ export default function ProjectGallery() {
                   <button
                     id="lightbox-close-btn"
                     onClick={() => setSelectedProject(null)}
-                    className="absolute top-4 right-4 z-30 bg-white/90 hover:bg-[#0052FF] hover:text-white text-[#0F172A] p-2.5 rounded-full transition-all duration-300 focus:outline-none border border-white/50 shadow-md backdrop-blur-sm cursor-pointer"
+                    className="absolute top-4 right-4 z-40 bg-white/90 hover:bg-[#0052FF] hover:text-white text-[#0F172A] p-2.5 rounded-full transition-all duration-300 focus:outline-none border border-white/50 shadow-md backdrop-blur-sm cursor-pointer"
                     aria-label="Close modal"
                   >
                     <X size={16} />
                   </button>
 
-                  {/* Left Side: Hardware-Accelerated Instant Media Viewer */}
-                  <div className="w-full md:w-[62%] relative bg-[#0F172A] flex flex-col justify-center items-center overflow-hidden min-h-[300px] md:min-h-full h-1/2 md:h-full">
-                    {selectedProject.video ? (
-                      <video
-                        src={safeUrl(selectedProject.video)}
-                        poster={safeUrl(selectedProject.image)}
-                        controls
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-contain md:object-cover transform-gpu relative z-10"
-                      />
-                    ) : (
-                      projectImages.map((imgUrl, imgIdx) => (
-                        <motion.img
-                          key={imgUrl}
-                          src={safeUrl(imgUrl)}
-                          alt={selectedProject.title}
-                          initial={false}
-                          animate={{
-                            opacity: imgIdx === activeLightboxImg ? 1 : 0,
-                            scale: imgIdx === activeLightboxImg ? 1 : 1.02
-                          }}
-                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                          className="absolute inset-0 w-full h-full object-contain md:object-cover transform-gpu pointer-events-none"
-                          referrerPolicy="no-referrer"
+                  {/* Left Side: Hardware-Accelerated Lightweight Image & Direct Video Viewer */}
+                  <div className="w-full md:w-[62%] relative bg-[#0F172A] flex flex-col justify-center items-center overflow-hidden min-h-[320px] md:min-h-full h-1/2 md:h-full">
+                    {/* Top Controls Badge: Slide status & Direct Drive Link */}
+                    <div className="absolute top-4 left-4 z-30 flex items-center space-x-2">
+                      {isVideoSlideActive ? (
+                        <div className="inline-flex items-center space-x-1.5 bg-[#0052FF] text-white px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                          <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse shrink-0" />
+                          <span>Live Video Slide</span>
+                        </div>
+                      ) : driveEmbedUrl ? (
+                        <button
+                          type="button"
+                          onClick={() => setActiveLightboxImg(projectImages.length)}
+                          className="inline-flex items-center space-x-1.5 bg-[#0052FF] hover:bg-[#0040D0] text-white px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-lg hover:scale-105 transition-all cursor-pointer"
+                        >
+                          <Play size={10} className="fill-current text-[#00D2FF]" />
+                          <span>Play Video Slide</span>
+                        </button>
+                      ) : null}
+
+                      {selectedProject.driveVideoUrl && (
+                        <a
+                          id="lightbox-direct-drive-pill"
+                          href={selectedProject.driveVideoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1.5 bg-black/60 hover:bg-black/80 text-white/90 hover:text-white px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-md border border-white/20 transition-all"
+                          title="Open directly in Google Drive"
+                        >
+                          <span>Open Drive</span>
+                          <ExternalLink size={10} />
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Direct Embedded Video Player Slide */}
+                    {isVideoSlideActive ? (
+                      <div className="absolute inset-0 w-full h-full z-10 bg-black flex items-center justify-center">
+                        <iframe
+                          src={driveEmbedUrl!}
+                          title={`${selectedProject.title} Video Tour`}
+                          className="w-full h-full border-0"
+                          allow="autoplay; fullscreen"
+                          allowFullScreen
                         />
-                      ))
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-[#0F172A]/10 pointer-events-none" />
-
-                  {/* Multi-photo slider controls */}
-                  {selectedProject.images && selectedProject.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveLightboxImg((prev) => (prev > 0 ? prev - 1 : selectedProject.images!.length - 1));
-                        }}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#0052FF] text-white p-2.5 rounded-full backdrop-blur-md border border-white/20 transition-all cursor-pointer z-20 shadow-lg"
-                        aria-label="Previous photo"
-                      >
-                        <ChevronLeft size={18} />
-                      </button>
-
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveLightboxImg((prev) => (prev < selectedProject.images!.length - 1 ? prev + 1 : 0));
-                        }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#0052FF] text-white p-2.5 rounded-full backdrop-blur-md border border-white/20 transition-all cursor-pointer z-20 shadow-lg"
-                        aria-label="Next photo"
-                      >
-                        <ChevronRight size={18} />
-                      </button>
-
-                      {/* Thumbnail strip */}
-                      <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-center space-x-2 bg-black/50 backdrop-blur-md p-1.5 rounded-2xl border border-white/15 overflow-x-auto">
-                        {selectedProject.images.map((img, i) => (
-                          <button
-                            key={i}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setActiveLightboxImg(i);
+                      </div>
+                    ) : (
+                      /* Image Slides */
+                      <>
+                        {projectImages.map((imgUrl, imgIdx) => (
+                          <motion.img
+                            key={imgUrl}
+                            src={safeUrl(imgUrl)}
+                            alt={selectedProject.title}
+                            initial={false}
+                            animate={{
+                              opacity: imgIdx === activeLightboxImg ? 1 : 0,
+                              scale: imgIdx === activeLightboxImg ? 1 : 1.02
                             }}
-                            className={`w-11 h-8 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
-                              activeLightboxImg === i ? 'border-[#00D2FF] scale-105 shadow-lg' : 'border-white/30 opacity-60 hover:opacity-100'
+                            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                            className="absolute inset-0 w-full h-full object-contain md:object-cover transform-gpu pointer-events-none"
+                            referrerPolicy="no-referrer"
+                          />
+                        ))}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-[#0F172A]/10 pointer-events-none" />
+                      </>
+                    )}
+
+                    {/* Multi-slide controls (arrows traverse photos AND the video slide) */}
+                    {totalSlides > 1 && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveLightboxImg((prev) => (prev > 0 ? prev - 1 : totalSlides - 1));
+                          }}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#0052FF] text-white p-2.5 rounded-full backdrop-blur-md border border-white/20 transition-all cursor-pointer z-30 shadow-lg"
+                          aria-label="Previous slide"
+                        >
+                          <ChevronLeft size={18} />
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveLightboxImg((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
+                          }}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#0052FF] text-white p-2.5 rounded-full backdrop-blur-md border border-white/20 transition-all cursor-pointer z-30 shadow-lg"
+                          aria-label="Next slide"
+                        >
+                          <ChevronRight size={18} />
+                        </button>
+
+                        {/* Thumbnail strip including photos and dedicated Video Tour slide */}
+                        <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-center space-x-2 bg-black/60 backdrop-blur-md p-1.5 rounded-2xl border border-white/20 overflow-x-auto">
+                          {projectImages.map((img, i) => (
+                            <button
+                              key={i}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveLightboxImg(i);
+                              }}
+                              className={`w-11 h-8 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                                activeLightboxImg === i ? 'border-[#00D2FF] scale-105 shadow-lg' : 'border-white/30 opacity-60 hover:opacity-100'
+                              }`}
+                              title={`Photo ${i + 1}`}
+                            >
+                              <img src={safeUrl(img)} alt="" className="w-full h-full object-cover" />
+                            </button>
+                          ))}
+
+                          {driveEmbedUrl && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveLightboxImg(projectImages.length);
+                              }}
+                              className={`h-8 px-3 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer flex items-center space-x-1.5 text-[10px] font-sans font-bold uppercase tracking-wider ${
+                                isVideoSlideActive
+                                  ? 'border-[#0052FF] bg-[#0052FF] text-white scale-105 shadow-[0_0_15px_rgba(0,82,255,0.6)]'
+                                  : 'border-[#0052FF]/60 bg-black/80 text-[#00D2FF] hover:bg-[#0052FF]/20 hover:border-[#0052FF]'
+                              }`}
+                              title="Direct Video Tour Slide"
+                            >
+                              <Play size={10} className="fill-current text-[#00D2FF]" />
+                              <span>Video Tour</span>
+                            </button>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Right Side: Case Study Details */}
+                  <div className="w-full md:w-[38%] h-1/2 md:h-full p-6 md:p-8 flex flex-col justify-between text-left overflow-y-auto">
+                    <div>
+                      {/* Tags */}
+                      <div className="flex flex-wrap items-center gap-2 mb-4">
+                        <span className="bg-[#0052FF]/15 text-[#0052FF] text-[10px] font-sans font-semibold uppercase tracking-[0.15em] px-3.5 py-1.5 rounded-full border border-[#0052FF]/10">
+                          {selectedProject.category === 'onsite' ? 'On-Site Progress' : selectedProject.category === 'interiors' ? 'Bespoke Interiors' : selectedProject.category}
+                        </span>
+                        {selectedProject.status && (
+                          <span className="bg-green-600/15 text-green-700 border border-green-600/30 text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                            {selectedProject.status}
+                          </span>
+                        )}
+                        <span className="text-[#475569] text-xs font-light tracking-wide font-sans">
+                          {selectedProject.category === 'onsite' ? 'Active Build' : `Completed in ${selectedProject.year}`}
+                        </span>
+                      </div>
+
+                      <h3 className="font-serif text-2xl md:text-3xl text-[#0F172A] tracking-tight mb-4">
+                        {selectedProject.title}
+                      </h3>
+
+                      <p className="text-xs md:text-sm text-[#475569] font-light leading-relaxed mb-6">
+                        {selectedProject.description}
+                      </p>
+
+                      {/* Metadata list */}
+                      <div className="grid grid-cols-3 gap-2 border-y border-[#D2DFEE]/60 py-4 mb-6">
+                        <div className="text-left">
+                          <span className="flex items-center text-[9px] uppercase tracking-wider text-[#475569] font-semibold">
+                            <MapPin size={10} className="mr-1 text-[#0052FF]" />
+                            Location
+                          </span>
+                          <span className="block text-xs font-bold text-[#0F172A] mt-0.5 font-display truncate">
+                            {selectedProject.location}
+                          </span>
+                        </div>
+                        <div className="text-left">
+                          <span className="flex items-center text-[9px] uppercase tracking-wider text-[#475569] font-semibold">
+                            <Layers size={10} className="mr-1 text-[#0052FF]" />
+                            {selectedProject.category === 'onsite' ? 'Stage Scope' : 'Area Size'}
+                          </span>
+                          <span className="block text-xs font-bold text-[#0F172A] mt-0.5 font-display">
+                            {selectedProject.size}
+                          </span>
+                        </div>
+                        <div className="text-left">
+                          <span className="flex items-center text-[9px] uppercase tracking-wider text-[#475569] font-semibold">
+                            <Calendar size={10} className="mr-1 text-[#0052FF]" />
+                            {selectedProject.category === 'onsite' ? 'Work Status' : 'Year'}
+                          </span>
+                          <span className="block text-xs font-bold text-[#0F172A] mt-0.5 font-display">
+                            {selectedProject.status || selectedProject.year}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Architectural highlights */}
+                      <div className="mb-6">
+                        <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#0F172A] mb-3">
+                          {selectedProject.category === 'onsite' ? 'On-Site Technical Execution' : 'Integrated Engineering Schemes'}
+                        </h4>
+                        <ul className="space-y-2">
+                          {selectedProject.details.map((detail, index) => (
+                            <li key={index} className="flex items-start text-xs font-light text-[#334155] leading-relaxed">
+                              <span className="text-[#0052FF] mr-2 font-bold">•</span>
+                              <span>{detail}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="pt-4 border-t border-[#D2DFEE]/60 flex flex-col space-y-3">
+                      {driveEmbedUrl ? (
+                        <div className="flex flex-col space-y-2">
+                          <button
+                            id="lightbox-play-video-slide-btn"
+                            type="button"
+                            onClick={() => setActiveLightboxImg(isVideoSlideActive ? 0 : projectImages.length)}
+                            className={`w-full flex items-center justify-center space-x-2 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer ${
+                              isVideoSlideActive
+                                ? 'bg-[#0F172A] hover:bg-[#1E293B] text-white border border-white/20'
+                                : 'bg-gradient-to-r from-[#0052FF] to-[#0040D0] text-white'
                             }`}
                           >
-                            <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                            <Play size={14} className="fill-current text-white" />
+                            <span>{isVideoSlideActive ? 'Back to Photo Gallery' : 'Play Video Directly in Slide'}</span>
                           </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
 
-                {/* Right Side: Case Study Details */}
-                <div className="w-full md:w-[38%] h-1/2 md:h-full p-6 md:p-8 flex flex-col justify-between text-left overflow-y-auto">
-                  <div>
-                    {/* Tags */}
-                    <div className="flex flex-wrap items-center gap-2 mb-4">
-                      <span className="bg-[#0052FF]/15 text-[#0052FF] text-[10px] font-sans font-semibold uppercase tracking-[0.15em] px-3.5 py-1.5 rounded-full border border-[#0052FF]/10">
-                        {selectedProject.category === 'onsite' ? 'On-Site Progress' : selectedProject.category === 'interiors' ? 'Bespoke Interiors' : selectedProject.category}
-                      </span>
-                      {selectedProject.status && (
-                        <span className="bg-green-600/15 text-green-700 border border-green-600/30 text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full">
-                          {selectedProject.status}
-                        </span>
-                      )}
-                      <span className="text-[#475569] text-xs font-light tracking-wide font-sans">
-                        {selectedProject.category === 'onsite' ? 'Active Build' : `Completed in ${selectedProject.year}`}
-                      </span>
-                    </div>
+                          {selectedProject.driveVideoUrl && (
+                            <a
+                              href={selectedProject.driveVideoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-center text-[10px] uppercase tracking-wider font-semibold text-[#0052FF] hover:underline flex items-center justify-center space-x-1 py-0.5"
+                            >
+                              <span>Watch Fullscreen on Google Drive</span>
+                              <ExternalLink size={10} />
+                            </a>
+                          )}
+                        </div>
+                      ) : selectedProject.driveVideoUrl ? (
+                        <a
+                          id="lightbox-drive-video-btn"
+                          href={selectedProject.driveVideoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-[#0052FF] to-[#0040D0] text-white py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer"
+                        >
+                          <Play size={14} className="fill-current" />
+                          <span>Watch Video Tour on Google Drive</span>
+                          <ExternalLink size={13} />
+                        </a>
+                      ) : null}
 
-                    <h3 className="font-serif text-2xl md:text-3xl text-[#0F172A] tracking-tight mb-4">
-                      {selectedProject.title}
-                    </h3>
-
-                    <p className="text-xs md:text-sm text-[#475569] font-light leading-relaxed mb-6">
-                      {selectedProject.description}
-                    </p>
-
-                    {/* Metadata list */}
-                    <div className="grid grid-cols-3 gap-2 border-y border-[#D2DFEE]/60 py-4 mb-6">
-                      <div className="text-left">
-                        <span className="flex items-center text-[9px] uppercase tracking-wider text-[#475569] font-semibold">
-                          <MapPin size={10} className="mr-1 text-[#0052FF]" />
-                          Location
-                        </span>
-                        <span className="block text-xs font-bold text-[#0F172A] mt-0.5 font-display truncate">
-                          {selectedProject.location}
-                        </span>
-                      </div>
-                      <div className="text-left">
-                        <span className="flex items-center text-[9px] uppercase tracking-wider text-[#475569] font-semibold">
-                          <Layers size={10} className="mr-1 text-[#0052FF]" />
-                          {selectedProject.category === 'onsite' ? 'Stage Scope' : 'Area Size'}
-                        </span>
-                        <span className="block text-xs font-bold text-[#0F172A] mt-0.5 font-display">
-                          {selectedProject.size}
-                        </span>
-                      </div>
-                      <div className="text-left">
-                        <span className="flex items-center text-[9px] uppercase tracking-wider text-[#475569] font-semibold">
-                          <Calendar size={10} className="mr-1 text-[#0052FF]" />
-                          {selectedProject.category === 'onsite' ? 'Work Status' : 'Year'}
-                        </span>
-                        <span className="block text-xs font-bold text-[#0F172A] mt-0.5 font-display">
-                          {selectedProject.status || selectedProject.year}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Architectural highlights */}
-                    <div className="mb-6">
-                      <h4 className="text-[10px] uppercase tracking-widest font-semibold text-[#0F172A] mb-3">
-                        {selectedProject.category === 'onsite' ? 'On-Site Technical Execution' : 'Integrated Engineering Schemes'}
-                      </h4>
-                      <ul className="space-y-2">
-                        {selectedProject.details.map((detail, index) => (
-                          <li key={index} className="flex items-start text-xs font-light text-[#334155] leading-relaxed">
-                            <span className="text-[#0052FF] mr-2 font-bold">•</span>
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <button
+                        id="lightbox-whatsapp-inquiry-btn"
+                        onClick={() => handleWhatsAppProjectInquiry(selectedProject)}
+                        className="w-full flex items-center justify-center space-x-2 bg-[#334155] hover:bg-[#0052FF] text-[#F4F7FC] py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-colors cursor-pointer border border-white/10"
+                      >
+                        <MessageSquare size={14} />
+                        <span>Enquire About Similar Build</span>
+                      </button>
+                      <button
+                        id="lightbox-close-text-btn"
+                        onClick={() => setSelectedProject(null)}
+                        className="text-center text-[10px] uppercase tracking-widest font-semibold text-[#475569] hover:text-[#0F172A] transition-colors py-1 cursor-pointer"
+                      >
+                        Close Project Case Study
+                      </button>
                     </div>
                   </div>
-
-                  {/* Actions */}
-                  <div className="pt-4 border-t border-[#D2DFEE]/60 flex flex-col space-y-3">
-                    <button
-                      id="lightbox-whatsapp-inquiry-btn"
-                      onClick={() => handleWhatsAppProjectInquiry(selectedProject)}
-                      className="w-full flex items-center justify-center space-x-2 bg-[#334155] hover:bg-[#0052FF] text-[#F4F7FC] py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-colors cursor-pointer border border-white/10"
-                    >
-                      <MessageSquare size={14} />
-                      <span>Enquire About Similar Build</span>
-                    </button>
-                    <button
-                      id="lightbox-close-text-btn"
-                      onClick={() => setSelectedProject(null)}
-                      className="text-center text-[10px] uppercase tracking-widest font-semibold text-[#475569] hover:text-[#0F172A] transition-colors py-1 cursor-pointer"
-                    >
-                      Close Project Case Study
-                    </button>
-                  </div>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          );
-        })()}
+            );
+          })()}
       </AnimatePresence>,
         document.body
       )}

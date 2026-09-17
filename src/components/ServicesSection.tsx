@@ -164,9 +164,9 @@ export default function ServicesSection() {
                 <span className="text-[10px] md:text-xs font-semibold text-[#0052FF] uppercase tracking-[0.4em] block mb-3">
                   OUR STRUCTURAL PROJECTS
                 </span>
-                <h2 className="font-serif text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
+                <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
                   Custom Building Solutions <br />
-                  <span className="font-serif italic text-[#475569] font-normal">Executed With Absolute Mastery</span>
+                  <span className="text-[#475569] font-normal">Executed With Absolute Mastery</span>
                 </h2>
                 <p className="text-sm md:text-base text-[#475569] font-light max-w-xl leading-relaxed">
                   We blend structural engineering integrity with bespoke material finishes. Explore our primary architectural works below.

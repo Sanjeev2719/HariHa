@@ -54,31 +54,32 @@ export default function WhatsAppWidget() {
             className="bg-white border border-[#EBE2D5] shadow-2xl w-[320px] md:w-[360px] rounded-3xl overflow-hidden mb-4 text-left"
           >
             {/* Header with WhatsApp Logo Background Accent */}
-            <div className="bg-[#2D2821] p-5 text-[#FAF6F0] flex items-center justify-between border-b border-[#B5946E]/30 relative overflow-hidden">
+            <div className="bg-[#0F172A] p-5 text-white flex items-center justify-between border-b border-[#0052FF]/30 relative overflow-hidden">
               <div className="absolute right-[-10px] top-[-10px] text-white/5 opacity-10 pointer-events-none">
                 <WhatsAppLogo className="w-24 h-24" />
               </div>
               
               <div className="flex items-center space-x-3 relative z-10">
                 <div className="relative">
-                  {/* Estimator Avatar placeholder */}
-                  <img
-                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=80&h=80&q=80"
-                    alt="Hariha Lead Engineer"
-                    className="w-10 h-10 object-cover border border-[#B5946E] rounded-full"
-                    referrerPolicy="no-referrer"
-                  />
+                  {/* Company Emblem / Support Avatar */}
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0052FF] to-[#00D2FF] p-[1.5px] shadow-sm flex items-center justify-center">
+                    <div className="w-full h-full bg-[#0F172A] rounded-full flex items-center justify-center">
+                      <span className="font-serif font-bold text-white text-sm">H</span>
+                    </div>
+                  </div>
                   {/* Styled Green Pulsing Online Status */}
-                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#2D2821] rounded-full" />
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0F172A] rounded-full animate-pulse" />
                 </div>
                 <div>
                   <div className="flex items-center space-x-1.5">
-                    <h4 className="text-xs font-serif font-bold tracking-wide">N. Swamy</h4>
-                    <span className="bg-green-600/20 text-green-400 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full">
+                    <h4 className="text-xs font-serif font-bold tracking-wide">Hariha Support Desk</h4>
+                    <span className="bg-green-500/20 text-green-400 text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full">
                       Online
                     </span>
                   </div>
-                  <p className="text-[9px] uppercase tracking-wider text-[#B5946E] font-sans font-medium">Chief Engineer & Founder</p>
+                  <p className="text-[9px] text-[#00D2FF] font-sans font-medium mt-0.5">
+                    Someone will be assigned soon and will be contacted
+                  </p>
                 </div>
               </div>
               
@@ -92,19 +93,19 @@ export default function WhatsAppWidget() {
             </div>
 
             {/* Conversation Window */}
-            <div className="p-5 bg-[#FAF6F0] space-y-4 max-h-[300px] overflow-y-auto">
-              <div className="bg-white border border-[#EBE2D5] p-4 text-xs font-light text-[#4E432F] leading-relaxed shadow-sm relative rounded-2xl">
+            <div className="p-5 bg-[#F4F7FC] space-y-4 max-h-[300px] overflow-y-auto">
+              <div className="bg-white border border-[#D2DFEE] p-4 text-xs font-light text-[#334155] leading-relaxed shadow-sm relative rounded-2xl">
                 <div className="flex items-center space-x-2 text-green-600 mb-2 font-semibold text-[10px] uppercase tracking-wider">
                   <WhatsAppLogo className="w-3.5 h-3.5" />
-                  <span>Official Chat Support</span>
+                  <span>Direct WhatsApp Assistance</span>
                 </div>
                 <p className="mb-2">
-                  Welcome to Hariha Infra Private Limited. We have been delivering premier building solutions in Bengaluru since 2002.
+                  Welcome to Hariha Infra Private Limited. We provide turnkey residential construction and premium home building across Bengaluru.
                 </p>
-                <p>
-                  Click any option below to pre-populate your inquiry on WhatsApp, or start a live chat with our engineering desk directly!
+                <p className="font-medium text-[#0052FF]">
+                  Send us a quick message below — our team will immediately assign an engineer to contact and assist you!
                 </p>
-                <span className="block text-[8px] text-[#706555] uppercase mt-2 text-right">Instant Reply Desk</span>
+                <span className="block text-[8px] text-[#64748B] uppercase mt-2 text-right font-medium">Instant Assignment Desk</span>
               </div>
 
               {/* Quick Prompt Selection */}

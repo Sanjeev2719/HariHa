@@ -64,15 +64,15 @@ export default function Hero({ onExploreProjects, onOpenContact }: HeroProps) {
             </span>
           </motion.div>
 
-          {/* Majestic Serif Heading */}
+          {/* Architectural Display Heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[72px] text-[#0F172A] tracking-tight leading-tight lg:leading-[1.05]">
+            <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-[72px] text-[#0F172A] tracking-tight leading-tight lg:leading-[1.05]">
               Building Quality. <br />
-              <span className="font-serif italic text-[#0052FF] font-normal">Delivering Trust.</span>
+              <span className="text-[#0052FF] font-extrabold">Delivering Trust.</span>
             </h1>
           </motion.div>
 

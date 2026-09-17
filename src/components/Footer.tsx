@@ -1,5 +1,5 @@
-import { COMPANY_CONTACTS } from '../data';
-import { MessageSquare, Phone, Mail, MapPin } from 'lucide-react';
+import { COMPANY_CONTACTS, SOCIAL_LINKS } from '../data';
+import { MessageSquare, Phone, Mail, MapPin, Instagram, Youtube, ExternalLink } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -21,19 +21,51 @@ export default function Footer({ onNavigate }: FooterProps) {
           
           {/* Brand Info Column */}
           <div className="space-y-6">
-            <div>
-              <span className="font-serif text-xl tracking-[0.15em] text-[#0052FF] font-bold">HARIHA INFRA</span>
-              <p className="text-[9px] tracking-[0.2em] font-sans text-[#F4F7FC]/70 uppercase mt-1">Premier Building Solutions</p>
+            <div className="flex items-center space-x-3">
+              <div className="w-9 h-9 rounded-xl bg-[#0052FF] flex items-center justify-center text-white font-serif font-bold text-base shadow-md">
+                H
+              </div>
+              <div>
+                <span className="font-serif text-xl tracking-[0.14em] text-[#0052FF] font-bold">HARIHA INFRA</span>
+                <p className="text-[9px] tracking-[0.2em] font-sans text-[#F4F7FC]/70 uppercase mt-0.5">Premier Building Solutions</p>
+              </div>
             </div>
             
             <p className="text-xs text-[#F4F7FC]/70 font-light leading-relaxed">
               Quality solid block construction and turnkey project specialists based in Bengaluru. Delivering trusted structures across residential, custom home interiors, and luxury renovation projects since 2002.
             </p>
 
+            {/* Social media connections */}
+            <div className="flex items-center space-x-3 pt-1">
+              <a
+                id="footer-instagram-link"
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] flex items-center justify-center text-white hover:scale-110 transition-transform shadow-sm"
+                title="Follow Hariha Infra on Instagram"
+                aria-label="Instagram"
+              >
+                <Instagram size={16} />
+              </a>
+
+              <a
+                id="footer-youtube-link"
+                href={SOCIAL_LINKS.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-[#FF0000] flex items-center justify-center text-white hover:scale-110 transition-transform shadow-sm"
+                title="Hariha Infra YouTube Channel"
+                aria-label="YouTube"
+              >
+                <Youtube size={16} />
+              </a>
+            </div>
+
             <button
               id="footer-whatsapp-button"
               onClick={handleWhatsAppInquiry}
-              className="flex items-center space-x-2 border border-[#F4F7FC]/20 hover:border-[#0052FF] hover:bg-[#F4F7FC]/5 px-4 py-2.5 text-[10px] uppercase tracking-wider font-medium transition-all"
+              className="flex items-center space-x-2 border border-[#F4F7FC]/20 hover:border-[#0052FF] hover:bg-[#0052FF]/10 px-4 py-2.5 text-[10px] uppercase tracking-wider font-semibold transition-all rounded-xl cursor-pointer"
             >
               <MessageSquare size={12} className="text-[#0052FF]" />
               <span>Direct WhatsApp Desk</span>
@@ -89,6 +121,15 @@ export default function Footer({ onNavigate }: FooterProps) {
             <ul className="space-y-3">
               <li>
                 <button
+                  id="footer-nav-services-link"
+                  onClick={() => onNavigate('services')}
+                  className="text-xs text-[#F4F7FC]/70 hover:text-[#0052FF] transition-colors cursor-pointer"
+                >
+                  Turnkey Building Services
+                </button>
+              </li>
+              <li>
+                <button
                   id="footer-nav-portfolio"
                   onClick={() => onNavigate('projects')}
                   className="text-xs text-[#F4F7FC]/70 hover:text-[#0052FF] transition-colors cursor-pointer"
@@ -98,29 +139,20 @@ export default function Footer({ onNavigate }: FooterProps) {
               </li>
               <li>
                 <button
+                  id="footer-nav-testimonials"
+                  onClick={() => onNavigate('testimonials')}
+                  className="text-xs text-[#F4F7FC]/70 hover:text-[#0052FF] transition-colors cursor-pointer"
+                >
+                  Verified Reviews & Endorsements
+                </button>
+              </li>
+              <li>
+                <button
                   id="footer-nav-process"
                   onClick={() => onNavigate('process')}
                   className="text-xs text-[#F4F7FC]/70 hover:text-[#0052FF] transition-colors cursor-pointer"
                 >
                   Our 4-Phase Delivery Process
-                </button>
-              </li>
-              <li>
-                <button
-                  id="footer-nav-testimonials"
-                  onClick={() => onNavigate('testimonials')}
-                  className="text-xs text-[#F4F7FC]/70 hover:text-[#0052FF] transition-colors cursor-pointer"
-                >
-                  Verified Partner Endorsements
-                </button>
-              </li>
-              <li>
-                <button
-                  id="footer-nav-faqs"
-                  onClick={() => onNavigate('faqs')}
-                  className="text-xs text-[#F4F7FC]/70 hover:text-[#0052FF] transition-colors cursor-pointer"
-                >
-                  Frequently Asked Questions
                 </button>
               </li>
               <li>
@@ -144,15 +176,26 @@ export default function Footer({ onNavigate }: FooterProps) {
             </ul>
           </div>
 
-          {/* Contacts info column */}
+          {/* Contacts info column with Google Maps Office Location Link */}
           <div className="space-y-6">
             <h4 className="text-[10px] uppercase tracking-widest font-bold text-[#0052FF]">Headquarters</h4>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3 text-xs text-[#F4F7FC]/70">
-                <MapPin size={14} className="text-[#0052FF] mt-0.5 shrink-0" />
-                <address className="not-italic leading-relaxed">
-                  {COMPANY_CONTACTS.address}
-                </address>
+                <MapPin size={15} className="text-[#0052FF] mt-0.5 shrink-0" />
+                <a
+                  id="footer-google-maps-link"
+                  href={COMPANY_CONTACTS.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="not-italic leading-relaxed hover:text-[#0052FF] transition-colors group flex flex-col"
+                  title="Open Office in Google Maps"
+                >
+                  <span>{COMPANY_CONTACTS.address}</span>
+                  <span className="inline-flex items-center space-x-1 text-[10px] text-[#00D2FF] mt-1 font-medium group-hover:underline">
+                    <span>View on Google Maps</span>
+                    <ExternalLink size={10} />
+                  </span>
+                </a>
               </li>
               <li className="flex items-center space-x-3 text-xs text-[#F4F7FC]/70">
                 <Phone size={14} className="text-[#0052FF] shrink-0" />

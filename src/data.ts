@@ -94,227 +94,26 @@ export const SERVICES_DATA: Service[] = [
 
 export const PROJECTS_DATA: Project[] = [
   {
-    id: 'villa-1-ongoing',
-    title: 'Villa 1 - Contemporary Luxury Estate',
-    category: 'onsite',
-    status: 'Ongoing Build Phase 3',
-    description: 'An architectural villa combining open-concept spatial design, Italian waterfall marble surfaces, floating cantilevered staircases, and full-height folding glass facades.',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1558882224-dda166733046?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Koramangala, Bengaluru',
-    year: 'Ongoing (2026)',
-    size: '6,200 sq. ft.',
-    details: [
-      'Open-concept living & dining hall with floating glass-railed cantilever staircase',
-      'High-traffic luxury kitchen featuring waterfall Italian marble island & concealed pantry',
-      'Master ensuite bath with warm travertine finishes, round feature window & rain shower',
-      'Bespoke master suite with integrated warm LED light channels & teak herringbone flooring',
-      'Full-height multi-fold glass doors creating seamless indoor-outdoor terrace flow'
-    ],
-    featured: true
-  },
-  {
-    id: 'villa-2-ongoing',
-    title: 'Villa 2 - Bespoke Modern Residence',
-    category: 'onsite',
-    status: 'Ongoing Build Phase 2',
-    description: 'Striking contemporary villa integrating rich timber cladding, subterranean concrete sump, and high-ceiling open living quarters.',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Indiranagar, Bengaluru',
-    year: 'Ongoing (2026)',
-    size: '5,400 sq. ft.',
-    details: [
-      'Custom timber-accented exterior wall cladding with concealed LED lighting channels',
-      'Open-plan living space with seamless transition to private courtyard gardens',
-      'Master ensuite with Italian travertine wall slabs & dual rain-head shower',
-      'Bespoke walk-in wardrobe with automated interior sensor lighting'
-    ],
-    featured: true
-  },
-  {
-    id: 'villa-3-ongoing',
-    title: 'Villa 3 - Grand Luxury Mansion & Sanctuary',
-    category: 'onsite',
-    status: 'Ongoing Build Phase 4',
-    description: 'A multi-wing architectural mansion featuring double-height entrance foyer, executive home office suite, private prayer room, and dedicated master & guest ensuite suites.',
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Sadashivanagar, Bengaluru',
-    year: 'Ongoing (2026)',
-    size: '8,500 sq. ft.',
-    details: [
-      'Grand entrance foyer with marble-clad feature wall & double-height foyer ceiling',
-      'Executive home office & study suite with integrated acoustical wall panelling',
-      'Tranquil dedicated prayer sanctuary with custom brass & teak inlay work',
-      'Comprehensive multi-bedroom layout including Anaya Suite, Yohan Suite & Guest Quarters',
-      'Multi-car subterranean basement parking with reinforced concrete grade slab'
-    ],
-    featured: true
-  },
-  {
-    id: 'live-site-1',
-    title: 'Live Site 1 – Active Foundation & Rebar Works',
-    category: 'onsite',
-    status: 'Live Build Progress',
-    description: 'Real-time on-site execution logging footing pit excavation, rebar column cage shuttering, size-stone masonry, and concrete pouring.',
-    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1581094288338-2314dddb7eed?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Sarjapur Site, Bengaluru',
-    year: 'Live Phase 2 (2026)',
-    size: '6,500 sq. ft.',
-    details: [
-      'Column rebar framing aligned against engineering center-line drawings',
-      'Vertical timber formwork secured with high-tensile locking clamps',
-      'Damp-proof DPC membrane application and subterranean sump plastering',
-      'Live site video logs & stage progress documentation'
-    ],
-    featured: true
-  },
-  {
-    id: 'live-site-2',
-    title: 'Live Site 2 – Superstructure & Block Masonry',
-    category: 'onsite',
-    status: 'Live Build Progress',
-    description: 'On-site execution capturing solid block masonry wall layout, window sill lintel casting, rooftop slab waterproofing, and structural column alignment.',
-    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Whitefield Site, Bengaluru',
-    year: 'Live Phase 3 (2026)',
-    size: '5,800 sq. ft.',
-    details: [
-      'Solid concrete block masonry with strictly controlled 1:4 mortar ratio',
-      'Grade slab M-25 concrete mix screed leveling and high-frequency compaction',
-      'Laser level line alignment checks across all structural perimeter points',
-      'Comprehensive live on-site progress documentation'
-    ],
-    featured: true
-  },
-  {
-    id: 'finished-villa-1',
-    title: 'Koramangala Luxury Residence',
-    category: 'residential',
+    id: 'basha-hotel',
+    title: 'Basha Hotel – Commercial Project',
+    category: 'commercial',
     status: 'Completed Masterpiece',
-    description: 'A completed luxury turnkey villa featuring bespoke structural woodwork, Italian waterfall marble flooring, and double-height living spaces.',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
+    driveVideoUrl: 'https://drive.google.com/file/d/1nUIPGm_QN1AWPHFbcnSoN1BoSnSZnBTy/view?usp=sharing',
+    description: 'Commercial hospitality development and structural layout. Watch our full high-definition video walkthroughs and footage directly on Google Drive.',
+    image: '/villa1/V1 Outdoor.jpg',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80'
+      '/villa1/V1 Outdoor.jpg',
+      '/villa1/V1 Dining.jpg',
+      '/villa1/V1 Lounge.jpg'
     ],
-    location: 'Koramangala, Bengaluru',
+    location: 'Bengaluru',
     year: '2025',
-    size: '5,200 sq. ft.',
+    size: '12,000 sq. ft.',
     details: [
-      'Turnkey handover completed within 1-year timeline',
-      'Burma Teak wood main door with artisan carvings',
-      'Integrated smart lighting channels & floor-to-ceiling glass paneling',
-      'Complete structural and interior quality certification'
-    ],
-    featured: true
-  },
-  {
-    id: 'finished-villa-2',
-    title: 'Indiranagar Modern Duplex Villa',
-    category: 'residential',
-    status: 'Completed Masterpiece',
-    description: 'A finished contemporary duplex villa with custom marine-grade kitchen, Burma teak main entrance, and subterranean concrete sump.',
-    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Indiranagar, Bengaluru',
-    year: '2025',
-    size: '4,800 sq. ft.',
-    details: [
-      'Subterranean 10,000L concrete water storage sump',
-      'Gourmet modular kitchen featuring quartz island counter',
-      'Complete damp-proof course treatment across all basement walls',
-      'Handover completed ahead of guaranteed schedule'
-    ],
-    featured: true
-  },
-  {
-    id: 'finished-villa-3',
-    title: 'Sadashivanagar Architectural Sanctuary',
-    category: 'interiors',
-    status: 'Completed Masterpiece',
-    description: 'Elite residential interior execution integrating automated false ceiling lighting channels, travertine master ensuite, and teak wood pooja room.',
-    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Sadashivanagar, Bengaluru',
-    year: '2025',
-    size: '6,000 sq. ft.',
-    details: [
-      'Italian marble flooring with warm LED lighting channels',
-      'Custom modular kitchen with hydraulic soft-close cabinetry',
-      'Master ensuite with Italian travertine wall slabs & dual rain-head shower',
-      'Handcrafted teak wood pooja room with brass accents'
-    ],
-    featured: true
-  },
-  {
-    id: 'finished-villa-4',
-    title: 'Jayanagar Grand Mansion & Estate',
-    category: 'residential',
-    status: 'Completed Masterpiece',
-    description: 'Grand luxury multi-wing mansion with double-height entrance foyer, executive home office, and multi-car basement parking.',
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=80'
-    ],
-    location: 'Jayanagar, Bengaluru',
-    year: '2025',
-    size: '7,500 sq. ft.',
-    details: [
-      'Monolithic grade slab & column foundation network',
-      'Executive home office & study suite with acoustical wall panelling',
-      'Tranquil dedicated prayer sanctuary with custom brass & teak inlay work',
-      'Subterranean multi-car parking facility'
+      'Commercial grade concrete foundation & solid block masonry',
+      'High-traffic public corridors and luxury dining layout',
+      'Watch full site video recordings hosted on Google Drive (Basha Hotel)',
+      'Delivered strictly on scheduled handover timeline'
     ],
     featured: true
   }
@@ -355,8 +154,26 @@ export const COMPANY_CONTACTS = {
   phoneAlt: '+91 99002 30585',
   email: 'nswamy.hariha@gmail.com',
   address: 'No. 119, RHCS Layout, Annapoorneshwari Nagar, Bengaluru - 560091',
-  whatsappNumber: '917899039808', // Testing phone number 7899039808 with India country code
+  coordinates: {
+    lat: 12.97866,
+    lng: 77.50618
+  },
+  googleMapsUrl: 'https://www.google.com/maps?q=12.97866,77.50618',
+  whatsappNumber: '918884638902',
   whatsappText: 'Hello Hariha Infra! I am viewing your website and would like to schedule a consultation regarding your Construction Packages.'
+};
+
+export const SOCIAL_LINKS = {
+  instagram: 'https://www.instagram.com/hariha_infra/',
+  youtube: 'https://www.youtube.com/@harihainfra',
+  drivePhotos: 'https://drive.google.com/drive/folders/1MZPgC69zkUi3NxB1p_r0pFCMyIU6slwB?usp=sharing',
+  bashaHotelDriveUrl: 'https://drive.google.com/file/d/1nUIPGm_QN1AWPHFbcnSoN1BoSnSZnBTy/view?usp=sharing'
+};
+
+export const WHATSAPP_POPUP_CONFIG = {
+  title: 'Hariha Infra Support',
+  statusBadge: 'Active Desk',
+  assignmentNotice: 'Someone will be assigned soon and will contact you directly.'
 };
 
 export const PACKAGES_DATA = [

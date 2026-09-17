@@ -17,9 +17,9 @@ export interface Project {
   category: string;
   description: string;
   image: string;
-  images?: string[];
   video?: string;
   videos?: string[];
+  driveVideoUrl?: string;
   status?: string;
   location: string;
   year: string;

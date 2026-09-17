@@ -66,9 +66,9 @@ export default function ProcessSection() {
               1-Year Handover Guaranteed
             </span>
           </div>
-          <h2 className="font-serif text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
+          <h2 className="font-display font-bold text-3xl md:text-5xl text-[#0F172A] tracking-tight leading-tight mb-6">
             The Architectural Path <br />
-            <span className="font-serif italic text-[#475569] font-normal">Aligned for Complete Handover Within 1 Year</span>
+            <span className="text-[#475569] font-normal">Aligned for Complete Handover Within 1 Year</span>
           </h2>
           <p className="text-sm md:text-base text-[#475569] font-light leading-relaxed max-w-xl">
             From raw soil and blueprint schematics to turnkey key handovers, our transparent 4-phase sequence guarantees your build is completed and handed over in exactly 12 months (52 weeks).

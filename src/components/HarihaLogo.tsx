@@ -31,7 +31,8 @@ export default function HarihaLogo({
   className = '',
   variant = 'full',
   size = 'md',
-  showTagline = true
+  showTagline = true,
+  dark = false
 }: HarihaLogoProps) {
   const sizeMap = {
     sm: {
